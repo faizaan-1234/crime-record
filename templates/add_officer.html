@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% from '_form_helpers.html' import render_input with context %}
+
+{% block title %}Add Officer{% endblock %}
+
+{% block content %}
+    <h2>Add New Officer</h2>
+
+    <form method="POST" action="{{ url_for('add_officer') }}">
+        {{ render_input('first_name', 'First Name', required=True, value=form_data.get('first_name') if form_data else '') }}
+        {{ render_input('last_name', 'Last Name', required=True, value=form_data.get('last_name') if form_data else '') }}
+        {{ render_input('badge_number', 'Badge Number', required=True, value=form_data.get('badge_number') if form_data else '') }}
+        {{ render_input('rank', 'Rank', value=form_data.get('rank') if form_data else '') }} {# Form field name is 'rank' #}
+        {{ render_input('department', 'Department', value=form_data.get('department') if form_data else '') }}
+        {{ render_input('contact', 'Contact Number', type='tel', value=form_data.get('contact') if form_data else '') }}
+        {{ render_input('email', 'Email', type='email', value=form_data.get('email') if form_data else '') }}
+
+        <button type="submit" class="btn">Add Officer</button>
+        <a href="{{ url_for('list_officers') }}" class="btn btn-cancel">Cancel</a>
+    </form>
+{% endblock %}

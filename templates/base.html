@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Crime Records{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Add links to Bootstrap or other CSS frameworks if desired -->
+    <!-- Example using Bootstrap CDN (optional)
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    -->
+</head>
+<body>
+    <header>
+        <h1>Crime Records Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('list_crimes') }}">Crimes</a></li>
+                <li><a href="{{ url_for('list_victims') }}">Victims</a></li>
+                <li><a href="{{ url_for('list_suspects') }}">Suspects</a></li>
+                <li><a href="{{ url_for('list_officers') }}">Officers</a></li>
+                <li><a href="{{ url_for('list_witnesses') }}">Witnesses</a></li>
+                <li><a href="{{ url_for('list_evidence') }}">Evidence</a></li>
+                <li><a href="{{ url_for('list_reports') }}">Reports</a></li>
+                 <li><a href="{{ url_for('list_reported_by') }}">Reporters</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}
+        <!-- Page specific content will go here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Use current_year passed from index route or default -->
+        <p>© {{ '2025' }} faizaan and pavan kalyan</p>
+    </footer>
+
+    <!-- Add links to JavaScript files if needed -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- Example using Bootstrap JS Bundle CDN (optional, requires Popper)
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    -->
+</body>
+</html>

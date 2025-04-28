@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% from '_form_helpers.html' import render_input, render_select, render_textarea with context %}
+
+{% block title %}Add Report{% endblock %}
+
+{% block content %}
+    <h2>Add New Report</h2>
+
+    <form method="POST" action="{{ url_for('add_report') }}">
+        {{ render_input('report_date', 'Report Date', type='date', value=form_data.get('report_date') if form_data else '') }}
+        {{ render_input('report_type', 'Report Type', value=form_data.get('report_type') if form_data else '') }}
+
+        {# Dropdowns for optional linking #}
+        {{ render_select('crime_id', 'Related Crime (Optional)', crimes, 'CrimeID', 'Name', selected_value=form_data.get('crime_id') if form_data else none) }}
+        {{ render_select('officer_id', 'Officer Filing (Optional)', officers, 'OfficerID', 'Name', selected_value=form_data.get('officer_id') if form_data else none) }}
+
+        {{ render_textarea('description', 'Description', value=form_data.get('description') if form_data else '') }}
+
+        <button type="submit" class="btn">Add Report</button>
+        <a href="{{ url_for('list_reports') }}" class="btn btn-cancel">Cancel</a>
+    </form>
+{% endblock %}

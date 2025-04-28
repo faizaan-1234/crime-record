@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Witnesses List{% endblock %}
+
+{% block content %}
+    <h2>Witnesses</h2>
+    <a href="{{ url_for('add_witness') }}" class="btn btn-add">Add New Witness</a>
+
+    {% if witnesses %}
+     <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Related Crime (ID)</th>
+                    <th>Date of Birth</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Statement</th>
+                    <th class="actions-header">Actions</th> {# <-- Added #}
+                </tr>
+            </thead>
+            <tbody>
+                {% for witness in witnesses %}
+                <tr>
+                    <td>{{ witness.WitnessID }}</td>
+                    <td>{{ witness.FirstName }}</td>
+                    <td>{{ witness.LastName }}</td>
+                    <td>
+                        {% if witness.CrimeID %}
+                            {{ witness.CrimeType | default('Crime') }} on {{ witness.CrimeDate | default ('Unknown Date') }} (ID: {{ witness.CrimeID }})
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                    <td>{{ witness.DateOfBirth.strftime('%Y-%m-%d') if witness.DateOfBirth else 'N/A' }}</td>
+                    <td>{{ witness.PhoneNumber | default('N/A', True) }}</td>
+                    <td>{{ witness.Email | default('N/A', True) }}</td>
+                    <td>{{ witness.Statement | truncate(50, True) if witness.Statement else 'N/A' }}</td>
+                    <td class="actions"> {# <-- Added #}
+                         <a href="{{ url_for('edit_witness', witness_id=witness.WitnessID) }}" class="btn btn-edit btn-small">Edit</a>
+                        <form method="POST" action="{{ url_for('delete_witness', witness_id=witness.WitnessID) }}" style="display:inline;" class="delete-form">
+                            <button type="submit" class="btn btn-delete btn-small">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    {% else %}
+        <p>No witnesses found.</p>
+    {% endif %}
+{% endblock %}

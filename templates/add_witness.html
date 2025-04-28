@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% from '_form_helpers.html' import render_input, render_select, render_textarea with context %}
+
+{% block title %}Add Witness{% endblock %}
+
+{% block content %}
+    <h2>Add New Witness</h2>
+
+    <form method="POST" action="{{ url_for('add_witness') }}">
+        {{ render_input('first_name', 'First Name', required=True, value=form_data.get('first_name') if form_data else '') }}
+        {{ render_input('last_name', 'Last Name', required=True, value=form_data.get('last_name') if form_data else '') }}
+        {{ render_input('dob', 'Date of Birth', type='date', value=form_data.get('dob') if form_data else '') }}
+        {{ render_input('address', 'Address', value=form_data.get('address') if form_data else '') }}
+        {{ render_input('phone', 'Phone Number', type='tel', value=form_data.get('phone') if form_data else '') }}
+        {{ render_input('email', 'Email', type='email', value=form_data.get('email') if form_data else '') }}
+
+        {# Dropdown to link witness to a crime #}
+        {{ render_select('crime_id', 'Related Crime (Optional)', crimes, 'CrimeID', 'Name', selected_value=form_data.get('crime_id') if form_data else none) }}
+
+        {{ render_textarea('statement', 'Statement', value=form_data.get('statement') if form_data else '') }}
+
+        <button type="submit" class="btn">Add Witness</button>
+        <a href="{{ url_for('list_witnesses') }}" class="btn btn-cancel">Cancel</a>
+    </form>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% from '_form_helpers.html' import render_input with context %}
+
+{% block title %}Edit Officer {{ officer.OfficerID }}{% endblock %}
+
+{% block content %}
+    <h2>Edit Officer (ID: {{ officer.OfficerID }})</h2>
+
+    <form method="POST" action="{{ url_for('edit_officer', officer_id=officer.OfficerID) }}">
+        {# form_data contains pre-filled data #}
+        {{ render_input('first_name', 'First Name', required=True, value=form_data.FirstName) }}
+        {{ render_input('last_name', 'Last Name', required=True, value=form_data.LastName) }}
+        {{ render_input('badge_number', 'Badge Number', required=True, value=form_data.BadgeNumber) }}
+        {{ render_input('rank', 'Rank', value=form_data.rank) }} {# Use 'rank' from form_data dict set in route #}
+        {{ render_input('department', 'Department', value=form_data.Department) }}
+        {{ render_input('contact', 'Contact Number', type='tel', value=form_data.ContactNumber) }}
+        {{ render_input('email', 'Email', type='email', value=form_data.Email) }}
+
+        <button type="submit" class="btn">Update Officer</button>
+        <a href="{{ url_for('list_officers') }}" class="btn btn-cancel">Cancel</a>
+    </form>
+{% endblock %}

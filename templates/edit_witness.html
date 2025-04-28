@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% from '_form_helpers.html' import render_input, render_select, render_textarea with context %}
+
+{% block title %}Edit Witness {{ witness.WitnessID }}{% endblock %}
+
+{% block content %}
+    <h2>Edit Witness (ID: {{ witness.WitnessID }})</h2>
+
+    <form method="POST" action="{{ url_for('edit_witness', witness_id=witness.WitnessID) }}">
+        {{ render_input('first_name', 'First Name', required=True, value=form_data.FirstName) }}
+        {{ render_input('last_name', 'Last Name', required=True, value=form_data.LastName) }}
+        {{ render_input('dob', 'Date of Birth', type='date', value=form_data.DateOfBirth) }} {# Assumes YYYY-MM-DD #}
+        {{ render_input('address', 'Address', value=form_data.Address) }}
+        {{ render_input('phone', 'Phone Number', type='tel', value=form_data.PhoneNumber) }}
+        {{ render_input('email', 'Email', type='email', value=form_data.Email) }}
+
+        {# Dropdown to link witness to a crime #}
+        {{ render_select('crime_id', 'Related Crime (Optional)', crimes, 'CrimeID', 'Name', selected_value=form_data.CrimeID) }}
+
+        {{ render_textarea('statement', 'Statement', value=form_data.Statement) }}
+
+        <button type="submit" class="btn">Update Witness</button>
+        <a href="{{ url_for('list_witnesses') }}" class="btn btn-cancel">Cancel</a>
+    </form>
+{% endblock %}

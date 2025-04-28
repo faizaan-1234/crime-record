@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Crimes List{% endblock %}
+
+{% block content %}
+    <h2>Crimes</h2>
+    <a href="{{ url_for('add_crime') }}" class="btn btn-add">Report New Crime</a>
+
+    {# Check if the crimes list exists and has items #}
+    {% if crimes %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Victim</th>
+                        <th>Suspect</th>
+                        <th>Officer</th>
+                        <th>Reported By</th>
+                        <th>Evidence Type</th>
+                        <th>Description</th>
+                        <th class="actions-header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {# --- Start of the loop --- #}
+                    {% for crime in crimes %}
+                    <tr>
+                        <td>{{ crime.CrimeID }}</td>
+                        <td>{{ crime.CrimeType }}</td>
+                        {# Display Date safely #}
+                        <td>{{ crime.DateOfCrime.strftime('%Y-%m-%d') if crime.DateOfCrime else 'N/A' }}</td>
+                        {# Display pre-formatted Time safely #}
+                        <td>{{ crime.DisplayTime if crime.DisplayTime else 'N/A' }}</td>
+                        {# Display Location safely #}
+                        <td>{{ crime.Location | default('N/A', True) }}</td>
+                        <td>{{ crime.Status }}</td>
+                        {# Display linked names safely #}
+                        <td>{{ crime.VictimName | default('N/A', True) }}</td>
+                        <td>{{ crime.SuspectName | default('N/A', True) }}</td>
+                        <td>{{ crime.OfficerName | default('N/A', True) }}</td>
+                        <td>{{ crime.ReportedByName | default('N/A', True) }}</td>
+                        <td>{{ crime.EvidenceLinkedType | default('N/A', True) }}</td>
+                        {# Display description safely with truncation #}
+                        <td>{{ crime.Description | truncate(50, True) if crime.Description else 'N/A' }}</td>
+                        {# Actions column #}
+                        <td class="actions">
+                            <a href="{{ url_for('edit_crime', crime_id=crime.CrimeID) }}" class="btn btn-edit btn-small">Edit</a>
+                            <form method="POST" action="{{ url_for('delete_crime', crime_id=crime.CrimeID) }}" style="display:inline;" class="delete-form">
+                                <button type="submit" class="btn btn-delete btn-small">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %} {# --- End of the loop --- #}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        {# This block runs if the 'crimes' list is empty or doesn't exist #}
+        <p>No crimes found.</p>
+    {% endif %} {# --- End of the initial 'if crimes' check --- #}
+{% endblock %}

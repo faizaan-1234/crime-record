@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Victims List{% endblock %}
+
+{% block content %}
+    <h2>Victims</h2>
+    <a href="{{ url_for('add_victim') }}" class="btn btn-add">Add New Victim</a>
+
+    {% if victims %}
+     <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date of Birth</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th class="actions-header">Actions</th> {# <-- Added #}
+                </tr>
+            </thead>
+            <tbody>
+                {% for victim in victims %}
+                <tr>
+                    <td>{{ victim.VictimID }}</td>
+                    <td>{{ victim.FirstName }}</td>
+                    <td>{{ victim.LastName }}</td>
+                    <td>{{ victim.DateOfBirth.strftime('%Y-%m-%d') if victim.DateOfBirth else 'N/A' }}</td>
+                    <td>{{ victim.Address | default('N/A', True) }}</td>
+                    <td>{{ victim.PhoneNumber | default('N/A', True) }}</td>
+                    <td>{{ victim.Email | default('N/A', True) }}</td>
+                    <td class="actions"> {# <-- Added #}
+                        <a href="{{ url_for('edit_victim', victim_id=victim.VictimID) }}" class="btn btn-edit btn-small">Edit</a>
+                        <form method="POST" action="{{ url_for('delete_victim', victim_id=victim.VictimID) }}" style="display:inline;" class="delete-form">
+                            <button type="submit" class="btn btn-delete btn-small">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    {% else %}
+        <p>No victims found.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{# Import macros from the helper file #}
+{% from '_form_helpers.html' import render_input, render_select, render_textarea with context %}
+
+{% block title %}Add Crime{% endblock %}
+
+{% block content %}
+    <h2>Report New Crime</h2>
+
+    {# Use form_data passed back on validation errors to repopulate #}
+    {# request.form.get() is handled within the macros if form_data is not passed #}
+    <form method="POST" action="{{ url_for('add_crime') }}">
+
+        {{ render_input('crime_type', 'Crime Type', required=True, value=form_data.get('crime_type') if form_data else '') }}
+        {{ render_textarea('description', 'Description', value=form_data.get('description') if form_data else '') }}
+        {{ render_input('date_of_crime', 'Date of Crime', type='date', required=True, value=form_data.get('date_of_crime') if form_data else '') }}
+        {{ render_input('time_of_crime', 'Time of Crime', type='time', value=form_data.get('time_of_crime') if form_data else '') }}
+        {{ render_input('location', 'Location', value=form_data.get('location') if form_data else '') }}
+
+         <div class="form-group">
+             <label for="status">Status</label>
+             <select id="status" name="status">
+                 {# Default to 'Reported' or use value from form_data if validation failed #}
+                 {% set current_status = form_data.get('status') if form_data else 'Reported' %}
+                 <option value="Reported" {% if current_status == 'Reported' %}selected{% endif %}>Reported</option>
+                 <option value="Investigating" {% if current_status == 'Investigating' %}selected{% endif %}>Investigating</option>
+                 <option value="Closed" {% if current_status == 'Closed' %}selected{% endif %}>Closed</option>
+                 <option value="Pending" {% if current_status == 'Pending' %}selected{% endif %}>Pending</option>
+             </select>
+         </div>
+
+        <!-- Dropdowns for Foreign Keys -->
+        {{ render_select('victim_id', 'Victim (Optional)', victims, 'VictimID', 'Name', selected_value=form_data.get('victim_id') if form_data else none) }}
+        {{ render_select('suspect_id', 'Suspect (Optional)', suspects, 'SuspectID', 'Name', selected_value=form_data.get('suspect_id') if form_data else none) }}
+        {{ render_select('officer_id', 'Assigned Officer (Optional)', officers, 'OfficerID', 'Name', selected_value=form_data.get('officer_id') if form_data else none) }}
+        {{ render_select('reported_by_id', 'Reported By (Optional)', reported_by, 'ReportedByID', 'Name', selected_value=form_data.get('reported_by_id') if form_data else none) }}
+        {{ render_select('evidence_id', 'Related Evidence (Optional)', evidence, 'EvidenceID', 'Name', selected_value=form_data.get('evidence_id') if form_data else none) }}
+
+        <button type="submit" class="btn">Add Crime Report</button>
+        <a href="{{ url_for('list_crimes') }}" class="btn btn-cancel">Cancel</a>
+    </form>
+{% endblock %}

@@ -1,0 +1,49 @@
+{# templates/_form_helpers.html - Jinja2 Macros for Forms #}
+
+{# --- Renders a standard input field --- #}
+{% macro render_input(field_name, label, type='text', required=False, value='', placeholder='') %}
+    <div class="form-group">
+        <label for="{{ field_name }}">{{ label }}{% if required %}*{% endif %}</label>
+        <input type="{{ type }}" id="{{ field_name }}" name="{{ field_name }}"
+               value="{{ value or request.form.get(field_name, '') }}" {# Prefers passed value, falls back to request.form #}
+               placeholder="{{ placeholder }}"
+               {% if required %}required{% endif %}>
+    </div>
+{% endmacro %}
+
+
+{# --- Renders a select dropdown --- #}
+{% macro render_select(field_name, label, options, options_value_key, options_text_key, selected_value=None, required=False, include_none=True) %}
+    <div class="form-group">
+        <label for="{{ field_name }}">{{ label }}{% if required %}*{% endif %}</label>
+        <select id="{{ field_name }}" name="{{ field_name }}" {% if required %}required{% endif %}>
+            {# Handle the 'None' / 'Select' option carefully #}
+            {% set current_value = selected_value if selected_value is not none else request.form.get(field_name) %}
+            {% if include_none %}
+                 <option value="None" {% if current_value is none or current_value|string == 'None' %}selected{% endif %}>--- Select ---</option>
+            {% endif %}
+            {% for option in options %}
+                {% if option[options_value_key] is not none %} {# Only render actual options, skip the inserted 'None' item #}
+                    <option value="{{ option[options_value_key] }}"
+                            {# Compare as strings for robustness with form posts and pre-population #}
+                            {% if current_value is not none and option[options_value_key]|string == current_value|string %}selected{% endif %}>
+                        {{ option[options_text_key] }}
+                    </option>
+                 {% elif not include_none and loop.first %} {# Handle case where the only option is 'None' or 'No Records' #}
+                     <option value="None" disabled selected>{{ option[options_text_key] }}</option>
+                 {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+{% endmacro %}
+
+
+{# --- Renders a textarea field --- #}
+{% macro render_textarea(field_name, label, value='', required=False, placeholder='', rows=4) %}
+    <div class="form-group">
+        <label for="{{ field_name }}">{{ label }}{% if required %}*{% endif %}</label>
+        <textarea id="{{ field_name }}" name="{{ field_name }}" rows="{{ rows }}"
+                  placeholder="{{ placeholder }}"
+                  {% if required %}required{% endif %}>{{ value or request.form.get(field_name, '') }}</textarea> {# Prefers passed value #}
+    </div>
+{% endmacro %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% from '_form_helpers.html' import render_input, render_select, render_textarea with context %}
+
+{% block title %}Edit Crime {{ crime.CrimeID }}{% endblock %}
+
+{% block content %}
+    <h2>Edit Crime (ID: {{ crime.CrimeID }})</h2>
+
+    {# Form points to the edit route for this specific crime #}
+    <form method="POST" action="{{ url_for('edit_crime', crime_id=crime.CrimeID) }}">
+
+        {# Macros use form_data for pre-population #}
+        {{ render_input('crime_type', 'Crime Type', required=True, value=form_data.CrimeType) }}
+        {{ render_textarea('description', 'Description', value=form_data.Description) }}
+        {{ render_input('date_of_crime', 'Date of Crime', type='date', required=True, value=form_data.DateOfCrime) }} {# Assumes YYYY-MM-DD format passed in form_data #}
+        {{ render_input('time_of_crime', 'Time of Crime', type='time', value=form_data.TimeOfCrime) }} {# Assumes HH:MM format passed in form_data #}
+        {{ render_input('location', 'Location', value=form_data.Location) }}
+
+         <div class="form-group">
+             <label for="status">Status</label>
+             <select id="status" name="status">
+                 {% set current_status = form_data.Status %}
+                 <option value="Reported" {% if current_status == 'Reported' %}selected{% endif %}>Reported</option>
+                 <option value="Investigating" {% if current_status == 'Investigating' %}selected{% endif %}>Investigating</option>
+                 <option value="Closed" {% if current_status == 'Closed' %}selected{% endif %}>Closed</option>
+                 <option value="Pending" {% if current_status == 'Pending' %}selected{% endif %}>Pending</option>
+             </select>
+         </div>
+
+        <!-- Dropdowns for Foreign Keys -->
+        {{ render_select('victim_id', 'Victim (Optional)', victims, 'VictimID', 'Name', selected_value=form_data.VictimID) }}
+        {{ render_select('suspect_id', 'Suspect (Optional)', suspects, 'SuspectID', 'Name', selected_value=form_data.SuspectID) }}
+        {{ render_select('officer_id', 'Assigned Officer (Optional)', officers, 'OfficerID', 'Name', selected_value=form_data.OfficerID) }}
+        {{ render_select('reported_by_id', 'Reported By (Optional)', reported_by, 'ReportedByID', 'Name', selected_value=form_data.ReportedByID) }}
+        {{ render_select('evidence_id', 'Related Evidence (Optional)', evidence, 'EvidenceID', 'Name', selected_value=form_data.EvidenceID) }}
+
+
+        <button type="submit" class="btn">Update Crime</button>
+        <a href="{{ url_for('list_crimes') }}" class="btn btn-cancel">Cancel</a>
+    </form>
+{% endblock %}

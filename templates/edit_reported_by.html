@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% from '_form_helpers.html' import render_input with context %}
+
+{% block title %}Edit Reporter {{ reporter.ReportedByID }}{% endblock %}
+
+{% block content %}
+    <h2>Edit Reporter (ID: {{ reporter.ReportedByID }})</h2>
+
+    <form method="POST" action="{{ url_for('edit_reported_by', reporter_id=reporter.ReportedByID) }}">
+        {{ render_input('first_name', 'First Name', required=True, value=form_data.FirstName) }}
+        {{ render_input('last_name', 'Last Name', required=True, value=form_data.LastName) }}
+        {{ render_input('dob', 'Date of Birth', type='date', value=form_data.DateOfBirth) }} {# Assumes YYYY-MM-DD #}
+        {{ render_input('address', 'Address', value=form_data.Address) }}
+        {{ render_input('phone', 'Phone Number', type='tel', value=form_data.PhoneNumber) }}
+        {{ render_input('email', 'Email', type='email', value=form_data.Email) }}
+
+        <button type="submit" class="btn">Update Reporter</button>
+        <a href="{{ url_for('list_reported_by') }}" class="btn btn-cancel">Cancel</a>
+    </form>
+{% endblock %}

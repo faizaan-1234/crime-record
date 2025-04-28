@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% from '_form_helpers.html' import render_input, render_select, render_textarea with context %}
+
+{% block title %}Edit Report {{ report_item.ReportID }}{% endblock %}
+
+{% block content %}
+    <h2>Edit Report (ID: {{ report_item.ReportID }})</h2>
+
+    <form method="POST" action="{{ url_for('edit_report', report_id=report_item.ReportID) }}">
+        {{ render_input('report_date', 'Report Date', type='date', value=form_data.ReportDate) }} {# Assumes YYYY-MM-DD #}
+        {{ render_input('report_type', 'Report Type', value=form_data.ReportType) }}
+
+        {# Dropdowns for optional linking #}
+        {{ render_select('crime_id', 'Related Crime (Optional)', crimes, 'CrimeID', 'Name', selected_value=form_data.CrimeID) }}
+        {{ render_select('officer_id', 'Officer Filing (Optional)', officers, 'OfficerID', 'Name', selected_value=form_data.OfficerID) }}
+
+        {{ render_textarea('description', 'Description', value=form_data.Description) }}
+
+        <button type="submit" class="btn">Update Report</button>
+        <a href="{{ url_for('list_reports') }}" class="btn btn-cancel">Cancel</a>
+    </form>
+{% endblock %}

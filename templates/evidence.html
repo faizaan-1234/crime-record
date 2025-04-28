@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Evidence List{% endblock %}
+
+{% block content %}
+    <h2>Evidence</h2>
+    <a href="{{ url_for('add_evidence') }}" class="btn btn-add">Add New Evidence</a>
+
+    {% if evidence_list %}
+     <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Date Collected</th>
+                    <th>Location Collected</th>
+                    <th>Collected By</th>
+                    <th>Description</th>
+                    <th class="actions-header">Actions</th> {# <-- Added #}
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in evidence_list %}
+                <tr>
+                    <td>{{ item.EvidenceID }}</td>
+                    <td>{{ item.EvidenceType | default('N/A', True) }}</td>
+                    <td>{{ item.DateCollected.strftime('%Y-%m-%d') if item.DateCollected else 'N/A' }}</td>
+                    <td>{{ item.LocationCollected | default('N/A', True) }}</td>
+                    <td>{{ item.CollectedByName if item.CollectedByName else 'N/A' }}</td>
+                    <td>{{ item.Description | truncate(50, True) if item.Description else 'N/A' }}</td>
+                    <td class="actions"> {# <-- Added #}
+                        <a href="{{ url_for('edit_evidence', evidence_id=item.EvidenceID) }}" class="btn btn-edit btn-small">Edit</a>
+                        <form method="POST" action="{{ url_for('delete_evidence', evidence_id=item.EvidenceID) }}" style="display:inline;" class="delete-form">
+                            <button type="submit" class="btn btn-delete btn-small">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    {% else %}
+        <p>No evidence found.</p>
+    {% endif %}
+{% endblock %}

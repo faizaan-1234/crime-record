@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% from '_form_helpers.html' import render_input, render_textarea with context %}
+
+{% block title %}Add Suspect{% endblock %}
+
+{% block content %}
+    <h2>Add New Suspect</h2>
+
+    <form method="POST" action="{{ url_for('add_suspect') }}">
+        {{ render_input('first_name', 'First Name', required=True, value=form_data.get('first_name') if form_data else '') }}
+        {{ render_input('last_name', 'Last Name', required=True, value=form_data.get('last_name') if form_data else '') }}
+        {{ render_input('dob', 'Date of Birth', type='date', value=form_data.get('dob') if form_data else '') }}
+        {{ render_input('address', 'Address', value=form_data.get('address') if form_data else '') }}
+        {{ render_input('phone', 'Phone Number', type='tel', value=form_data.get('phone') if form_data else '') }}
+        {{ render_input('known_aliases', 'Known Aliases', value=form_data.get('known_aliases') if form_data else '') }}
+        {{ render_textarea('criminal_record', 'Criminal Record', value=form_data.get('criminal_record') if form_data else '') }}
+
+        <button type="submit" class="btn">Add Suspect</button>
+        <a href="{{ url_for('list_suspects') }}" class="btn btn-cancel">Cancel</a>
+    </form>
+{% endblock %}

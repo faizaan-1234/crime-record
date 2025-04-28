@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% from '_form_helpers.html' import render_input, render_select, render_textarea with context %}
+
+{% block title %}Add Evidence{% endblock %}
+
+{% block content %}
+    <h2>Add New Evidence</h2>
+
+    <form method="POST" action="{{ url_for('add_evidence') }}">
+        {{ render_input('evidence_type', 'Evidence Type', value=form_data.get('evidence_type') if form_data else '') }}
+        {{ render_textarea('description', 'Description', value=form_data.get('description') if form_data else '') }}
+        {{ render_input('date_collected', 'Date Collected', type='date', value=form_data.get('date_collected') if form_data else '') }}
+        {{ render_input('location_collected', 'Location Collected', value=form_data.get('location_collected') if form_data else '') }}
+
+        {# Dropdown to link evidence to the collecting officer #}
+        {{ render_select('collected_by_id', 'Collected By Officer (Optional)', officers, 'OfficerID', 'Name', selected_value=form_data.get('collected_by_id') if form_data else none) }}
+
+        <button type="submit" class="btn">Add Evidence</button>
+        <a href="{{ url_for('list_evidence') }}" class="btn btn-cancel">Cancel</a>
+    </form>
+{% endblock %}

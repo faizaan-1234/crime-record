@@ -1,0 +1,429 @@
+/* static/css/style.css */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #343a40;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #343a40;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    margin: 0;
+    padding-bottom: 0.5rem;
+    font-weight: 300;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: center;
+    background-color: #495057;
+}
+
+nav ul li {
+    margin: 0 0.5rem; /* Reduced margin */
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.6rem 0.8rem; /* Adjusted padding */
+    display: block;
+    transition: background-color 0.2s ease;
+    font-size: 0.95rem;
+}
+
+nav ul li a:hover, nav ul li a:focus {
+    background-color: #6c757d;
+    color: #f8f9fa;
+    border-radius: 4px;
+}
+
+main {
+    flex: 1; /* Allows main to grow and push footer down */
+    max-width: 1400px; /* Wider max-width */
+    width: 95%; /* Percentage width for responsiveness */
+    margin: 2rem auto;
+    padding: 1.5rem 2rem;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.07);
+    border-radius: 8px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #e9ecef;
+    color: #6c757d;
+    font-size: 0.9em;
+    border-top: 1px solid #dee2e6;
+}
+
+h2 {
+    color: #495057;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto; /* Enable horizontal scrolling on small screens */
+    margin-top: 1.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem; /* Add space below table */
+    font-size: 0.95rem;
+}
+
+th, td {
+    padding: 0.9rem 0.75rem; /* Adjusted padding */
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #e9ecef;
+    font-weight: 600;
+    white-space: nowrap; /* Prevent headers from wrapping */
+}
+
+tr:hover {
+    background-color: #f1f3f5;
+}
+
+td:last-child, th:last-child {
+    text-align: right; /* Align actions to the right */
+}
+th.actions-header {
+     text-align: right; /* Explicitly align Actions header */
+}
+
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.9em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="time"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box; /* Important */
+    font-size: 1rem;
+    background-color: #fff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.4rem; /* Slightly adjusted padding */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-right: 0.7rem;
+    margin-top: 0.5rem;
+    text-align: center;
+    vertical-align: middle;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+.btn-add, button[type="submit"] {
+    background-color: #28a745; /* Green */
+    color: white;
+    border: 1px solid #28a745;
+}
+.btn-add:hover, button[type="submit"]:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn-cancel {
+    background-color: #ffc107; /* Yellow */
+    color: #212529;
+    border: 1px solid #ffc107;
+}
+.btn-cancel:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+/* Edit Button Style */
+.btn-edit {
+    background-color: #007bff; /* Blue */
+    color: white;
+    border: 1px solid #007bff;
+}
+.btn-edit:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+/* Delete Button Style */
+.btn-delete {
+    background-color: #dc3545; /* Red */
+    color: white;
+    border: 1px solid #dc3545;
+}
+.btn-delete:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Smaller buttons for table actions (optional) */
+.btn-small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
+/* Ensure buttons in actions column align well */
+td.actions {
+    white-space: nowrap; /* Prevent buttons from wrapping */
+}
+td.actions .btn {
+    margin-right: 5px; /* Space between buttons */
+    margin-top: 0; /* Reset top margin */
+    margin-bottom: 0; /* Reset bottom margin */
+    vertical-align: middle; /* Align buttons vertically */
+}
+td.actions form {
+    margin: 0; /* Remove default form margins */
+    display: inline-block; /* Keep form inline */
+    vertical-align: middle; /* Align forms vertically */
+}
+
+/* Flash Messages */
+.flash-messages {
+    padding: 0;
+    margin-bottom: 1.5rem;
+    list-style: none;
+}
+
+.alert {
+    position: relative;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column; /* Stack nav items vertically */
+        align-items: center;
+    }
+    nav ul li {
+        margin: 0.5rem 0;
+    }
+    main {
+        padding: 1rem;
+        width: 98%;
+    }
+    .btn {
+        width: 100%; /* Make buttons full width */
+        margin-bottom: 0.5rem;
+        margin-right: 0;
+    }
+     .btn-cancel {
+        margin-top: 0; /* Reduce top margin */
+    }
+     /* Adjust table actions for small screens */
+    td.actions {
+        white-space: normal; /* Allow wrapping */
+        text-align: left; /* Align left */
+    }
+     td.actions .btn, td.actions form {
+        display: block; /* Stack buttons */
+        width: 100%;
+        margin-bottom: 5px;
+    }
+     td.actions form button {
+         width: 100%; /* Make delete button full width inside form */
+     }
+}
+/* --- Styles for the Login Page Form (Add this to your existing style.css) --- */
+
+.login-container {
+    max-width: 400px; /* Limit the maximum width of the login box */
+    margin: 50px auto; /* Center the container horizontally with some space above/below */
+    padding: 30px; /* Add padding inside the container */
+    border: 1px solid #ddd; /* Add a light border */
+    border-radius: 8px; /* Give it rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    background-color: #fff; /* White background */
+    text-align: center; /* Center the text and form elements within the container */
+}
+
+.login-container h2 {
+    margin-top: 0; /* Remove default top margin */
+    margin-bottom: 25px; /* Space below the heading */
+    color: #333; /* Dark grey color for heading */
+}
+
+.login-form {
+    display: flex; /* Use Flexbox for form layout */
+    flex-direction: column; /* Stack form elements vertically */
+    gap: 15px; /* Add space between form groups */
+}
+
+.form-group {
+    text-align: left; /* Align labels and inputs to the left */
+    width: 100%; /* Make form groups take full width */
+}
+
+.form-group label {
+    display: block; /* Make label a block element so it's on its own line */
+    margin-bottom: 8px; /* Space between label and input */
+    font-weight: bold; /* Make labels bold */
+    color: #555; /* Slightly lighter color for labels */
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%; /* Make inputs take the full width of their container */
+    padding: 10px; /* Add padding inside inputs */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 4px; /* Rounded corners for inputs */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    font-size: 1rem; /* Standard font size */
+}
+
+.login-button {
+    width: 100%; /* Make the button take full width */
+    padding: 12px; /* Add padding inside the button */
+    background-color: #007bff; /* Bootstrap-like primary blue color */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Indicate it's clickable */
+    font-size: 1.1rem; /* Slightly larger font */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+    margin-top: 10px; /* Space above the button */
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.login-container p {
+    margin-top: 20px; /* Space above the links */
+    font-size: 0.9rem; /* Slightly smaller font size */
+}
+
+.login-container p a {
+    color: #007bff; /* Link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.login-container p a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+/* Style for flash messages within the login form (optional, adjust as needed) */
+.login-container .flash-messages {
+    margin-bottom: 20px;
+    text-align: center; /* Center flash messages */
+}
+
+.login-container .alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: #333; /* Default text color */
+}
+
+.login-container .alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.login-container .alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Add other alert styles (info, warning) if needed */
